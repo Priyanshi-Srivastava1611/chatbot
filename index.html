@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>convForm - example</title>
+	<title>Airbus Chatbot</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -12,43 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous">
     <script type="text/javascript" src="F:\convForm-master\custom.js"></script>
 </head>
-<style>
-    .chat_icon
-    {
-        position: fixed;
-        right: 30px;
-        
-        font-size: 80px;
-        bottom: 0;
-        z-index: 1000;
-        height: 40vh;
-    }
-    .chat_box
-    {
-        position: fixed;
-        right: 20px;
-        bottom: 100px;
-        width: 400px;
-        height: 75vh;
-        background-color: lightgray;
-        z-index: 1000;
-        transform: scaleY(0);
-        }
-        .chat_box.active
-        {
-            transform: scaleY(0);
-        }
-        .fas
-            {
-                font-size: 2.5rem;
-                color:black;
-            }
-</style>
+
 <body>
-	<div class="chat_icon">
-		<i class="fas fa-comments"></i>
-	</div>
-	
 	<section id="demo">
 	    <div class="vertical-align">
 	        <div class="container">
@@ -59,13 +24,42 @@
 	                            <form action="" method="GET" class="hidden">
 									<input type="text" name="bug" data-conv-question="Hello! I'm helper of airbus private ltd. How can I help You?" name="first-question">
 									<select name="start" data-conv-question="So,Are you Facing any kind of bug ?" >
-	                                    <option value="no">No, procees to bookings</option>
-	                                    <option value="yes">"Yes then Report your bug"</option>
+	                                    <option value="no">No, proceed to other functionalities</option>
+	                                    <option value="yes">"Yes"</option>
 	                                </select>
 									<div data-conv-fork="start">
 										<div data-conv-case="yes">
-											<input type="text" name="bug" data-conv-question="Enter your bug">
-											<input type="text" data-conv-question="Your bug=>, {bug}:0! submitted." data-no-answer="true">
+											<select name="bug" data-conv-question="Select Type of Bug ">
+												<option value="UI based">UI Based</option>
+												<option value="Functionality Based">Functionality Based</option>
+												<option value="Server">Server Irresponsive</option>
+												
+											</select>
+											<div data-conv-fork="bug">
+												<div data-conv-case="UI based">
+													<input data-conv-question="Type your bug">
+												</div>
+												<div data-conv-case="Functionality Based">
+													<input data-conv-question="Enter your bug">
+												</div>
+												<div data-conv-case="Server">
+													<select name="contact" data-conv-question="Would you like to be contacted by the dev team">
+														<option value="yes">Yes</option>
+														<option value="no">No</option>
+													</select>
+												<div data-conv-fork="contact">
+													<div data-conv-case="yes">
+														<input data-conv-question="You can contact us for more information   987866543
+																					Or write us anemail at:
+																					prishu.srivastava.39@gmail.com" data-no-answer="True">
+													</div>
+													<div data-conv-case="no">
+														<input data-conv-question="Type in your e-mail so we can contact you later-on" data-pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" id="email" type="email" name="email" required placeholder="What's your e-mail?">
+													</div>
+												</div>
+												</div>
+											</div>
+											<input type="text" data-conv-question="Your bug  submitted." data-no-answer="true">
 										</div>
 										<div data-conv-case="no">
 											<input type="text" name="name" data-conv-question="Alright! First, tell me your full name, please.|Okay! Please, tell me your name first.|What's your good name.">
@@ -111,20 +105,17 @@
 											</div>
 	                                	</div>
 									</div>
-	                                <input data-conv-question="You can contact us for more information   987866543
-											Or write us anemail at:
-												prishu.srivastava.39@gmail.com" data-no-answer="True">
-	                                <input data-conv-question="Type in your e-mail so we can contact you later-on" data-pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" id="email" type="email" name="email" required placeholder="What's your e-mail?">
 	                                
-									<select name="rating" data-conv-question="Would you please rate us" data-no-answer="True">
-	                                    <option value="*">*</option>
-										<option value="**">**</option>
-										<option value="***">***</option>
-										
-	                                </select>
+	                                
+	                                
+										<select  name="rating" data-conv-question="Please Rate Us">
+											<option value="*">*</option>
+											<option value="**">**</option>
+											<option value="***">***</option>		
+									</select>
 									<div data-conv-fork="rating">
 										<div data-conv-case="***">
-											<input type="text"data-conv-question="Thank You!" data-no-answer="True">
+											<inputdata-conv-question="Thank You!" data-no-answer="True">
 										</div>
 										<div data-conv-case="**">
 											<input  data-conv-question="Please provide your valuable feedback">
@@ -132,9 +123,11 @@
 										</div>
 										<div data-conv-case="*">
 											<input type="text" data-conv-question="Please tell the areas of improvememnt">
-											<input type="text" data-conv-question="Your response was saved.Hope you will have better experience next time">
+											<input  data-conv-question="Your response was saved.Hope you will have better experience next time" data-no-answer="True">
+											
 										</div>
 									</div>
+									<input data-conv-question="Type in your e-mail so we can contact you later-on" data-pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" id="email" type="email" name="email" required placeholder="What's your e-mail?">
 	                            </form>
 	                        </div>
 	                    </div>
